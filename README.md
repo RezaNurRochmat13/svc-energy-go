@@ -1,6 +1,6 @@
-# Research Modular Architecture Using Golang
+# Service Energy Using Golang
 
-This project is example research for how building modular architecture in Golang. 
+This project is example manage energy resource data using Golang.
 
 ## Table of Contents
 
@@ -34,15 +34,12 @@ List of all core technologies used to build this app/service along with their fu
 ### Backend
 - [Golang](https://golang.org/) - Programming Language [v1.12.4]
 - [Gin Gonic](https://github.com/gin-gonic/gin) - HTTP Routing Framework for Golang [v1.3.0]
-- [Echo](https://github.com/labstack/echo) - HTTP Routing Framework for Golang [v4.0.0]
 - [Dep Package Management](https://github.com/golang/dep) - Dep Package Management For Golang [v0.5.1]
 - [Viper Configuration Tools](https://github.com/spf13/viper) - Viper Configuration Tools [v1.3.2]
 - [Go SQL Driver](https://github.com/go-sql-driver/mysql) - SQL Driver For MySQL DB [v1.4.1]
-- [Assert Unit Testing](https://github.com/stretchr/testify) - Assert Testify Unit Test Tools [v1.3.0]
 
 ### Frontend
-- [Angular](https://angular.io/) - JS Framework [v.7.0.0]
-- [Bootstrap](http://getbootstrap.com/) - CSS Framework [v4.0.0]
+- None
 
 ### Automation Test
 - For Running All Test, run command go test
