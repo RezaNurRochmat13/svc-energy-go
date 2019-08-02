@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetAllUsers(ctx *gin.Context) {
+func GetAllenergy(ctx *gin.Context) {
 	ctx.JSON(200, gin.H{
-		"data": "All users data",
+		"data": "All data energy",
 	})
 }

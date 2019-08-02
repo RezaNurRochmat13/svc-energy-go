@@ -4,8 +4,8 @@ import (
 	"io"
 	"log"
 	"os"
-	productModulesConfiguration "svc-modular-arch-go/modules/product"
-	userModulesConfiguration "svc-modular-arch-go/modules/user"
+
+	energyModulesConfiguration "svc-energy-go/modules/energy"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,8 +26,7 @@ func SetupRootRoutesApplication() {
 
 	rootRoutesApplicationConfiguration := gin.Default()
 
-	userModulesConfiguration.UserRoutes(rootRoutesApplicationConfiguration)
-	productModulesConfiguration.ProductRoutes(rootRoutesApplicationConfiguration)
+	energyModulesConfiguration.EnergyRoutes(rootRoutesApplicationConfiguration)
 
 	rootRoutesApplicationConfiguration.Run(":8080")
 }
