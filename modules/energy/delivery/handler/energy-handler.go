@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetAllMeterRead(ctx *gin.Context) {
+func GetAllMeterReadHandler(ctx *gin.Context) {
 	limit := ctx.Query("limit")
 	offset := ctx.Query("offset")
 
@@ -26,7 +26,7 @@ func GetAllMeterRead(ctx *gin.Context) {
 	})
 }
 
-func GetDetailMeterRead(ctx *gin.Context) {
+func GetDetailMeterReadHandler(ctx *gin.Context) {
 	meterReadId := ctx.Param("meterReadId")
 
 	meterReadService, errorHandlerService := service.FetchDetailMeterRead(meterReadId)
@@ -46,7 +46,7 @@ func GetDetailMeterRead(ctx *gin.Context) {
 	}
 }
 
-func CreateNewMeterRead(ctx *gin.Context) {
+func CreateNewMeterReadHandler(ctx *gin.Context) {
 	var createNewMeterReadPayload model.CreateNewMeterRead
 
 	ctx.ShouldBindJSON(&createNewMeterReadPayload)
@@ -64,7 +64,7 @@ func CreateNewMeterRead(ctx *gin.Context) {
 	})
 }
 
-func UpdateMeterRead(ctx *gin.Context) {
+func UpdateMeterReadHandler(ctx *gin.Context) {
 	var (
 		updateMeterReadPayload model.UpdateMeterRead
 		meterReadId            = ctx.Param("meterReadId")
@@ -101,5 +101,39 @@ func UpdateMeterReadProcess(meterReadUpdatePayload model.UpdateMeterRead, meterR
 	ctx.JSON(200, gin.H{
 		"message": "Meter data updated",
 		"updated": meterReadUpdatePayload,
+	})
+}
+
+func DeleteMeterReadHandler(ctx *gin.Context) {
+	meterReadId := ctx.Param("meterReadId")
+
+	meterReadService, errorHandlerService := service.FetchDetailMeterRead(meterReadId)
+
+	if errorHandlerService != nil {
+		log.Printf("Error when get service : %s", errorHandlerService)
+		ctx.JSON(500, gin.H{"error": "Internal server error"})
+	}
+
+	if meterReadService == nil {
+		ctx.JSON(200, gin.H{
+			"message": "Data kosong",
+			"data":    []int{},
+		})
+	} else {
+
+		DeleteMeterReadProcess(meterReadId, ctx)
+	}
+}
+
+func DeleteMeterReadProcess(meterReadId string, ctx *gin.Context) {
+	errorHandlerDeleteMeterReadService := service.DeleteMeterRead(meterReadId)
+
+	if errorHandlerDeleteMeterReadService != nil {
+		log.Printf("Error when get service : %s", errorHandlerDeleteMeterReadService)
+		ctx.JSON(500, gin.H{"error": "Internal server error"})
+	}
+
+	ctx.JSON(200, gin.H{
+		"message": "Meter data deleted",
 	})
 }

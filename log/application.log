@@ -1,1 +1,2 @@
-[GIN] 2019/08/05 - 22:55:33 | 200 |   90.536075ms |       127.0.0.1 | PUT      /public/api/v1/meter-reads/7
+[GIN] 2019/08/05 - 23:07:34 | 200 |    1.716564ms |       127.0.0.1 | DELETE   /public/api/v1/meter-reads/9
+[GIN] 2019/08/05 - 23:07:44 | 200 |   50.130624ms |       127.0.0.1 | DELETE   /public/api/v1/meter-reads/7

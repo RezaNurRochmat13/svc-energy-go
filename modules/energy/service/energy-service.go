@@ -360,3 +360,39 @@ func UpdateMeterRead(meterReadUpdatePayload model.UpdateMeterRead, meterReadId s
 	return nil
 
 }
+
+func DeleteMeterRead(meterReadId string) error {
+	databaseInterface := DatabaseConnection()
+
+	initTransaction, errorHandlerTrans := databaseInterface.Begin()
+
+	if errorHandlerTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerTrans
+	}
+
+	deleteMeterReadRepository := repository.DeleteMeterRead()
+
+	deleteMeterReadPreparedStmt, errorHandlerQuery := initTransaction.Prepare(deleteMeterReadRepository)
+
+	if errorHandlerQuery != nil {
+		initTransaction.Rollback()
+		return errorHandlerQuery
+	}
+
+	_, errorHandlerExecPreparedStmt := deleteMeterReadPreparedStmt.Exec(meterReadId)
+
+	if errorHandlerExecPreparedStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerExecPreparedStmt
+	}
+
+	errorHandlerCommitTrans := initTransaction.Commit()
+
+	if errorHandlerCommitTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerCommitTrans
+	}
+
+	return nil
+}

@@ -10,9 +10,10 @@ func EnergyRoutes(userRoutes *gin.Engine) {
 
 	energyRouteConfiguration := userRoutes.Group("/public/api/v1")
 	{
-		energyRouteConfiguration.GET("meter-reads", handler.GetAllMeterRead)
-		energyRouteConfiguration.GET("meter-reads/:meterReadId", handler.GetDetailMeterRead)
-		energyRouteConfiguration.POST("meter-reads", handler.CreateNewMeterRead)
-		energyRouteConfiguration.PUT("meter-reads/:meterReadId", handler.UpdateMeterRead)
+		energyRouteConfiguration.GET("meter-reads", handler.GetAllMeterReadHandler)
+		energyRouteConfiguration.GET("meter-reads/:meterReadId", handler.GetDetailMeterReadHandler)
+		energyRouteConfiguration.POST("meter-reads", handler.CreateNewMeterReadHandler)
+		energyRouteConfiguration.PUT("meter-reads/:meterReadId", handler.UpdateMeterReadHandler)
+		energyRouteConfiguration.DELETE("meter-reads/:meterReadId", handler.DeleteMeterReadHandler)
 	}
 }
