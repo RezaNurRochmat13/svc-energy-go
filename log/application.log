@@ -1,1 +1,1 @@
-[GIN] 2019/08/05 - 21:15:44 | 200 |  206.549443ms |       127.0.0.1 | POST     /public/api/v1/meter-reads
+[GIN] 2019/08/05 - 22:55:33 | 200 |   90.536075ms |       127.0.0.1 | PUT      /public/api/v1/meter-reads/7

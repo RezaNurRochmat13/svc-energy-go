@@ -315,3 +315,48 @@ func createNewIntervalBlock(intervalBlockPayload model.CreateNewMeterRead) error
 
 	return nil
 }
+
+func UpdateMeterRead(meterReadUpdatePayload model.UpdateMeterRead, meterReadId string) error {
+	databaseInterface := DatabaseConnection()
+
+	initTransaction, errorHandlerTrans := databaseInterface.Begin()
+
+	if errorHandlerTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerTrans
+	}
+
+	updateMeterReadRepository := repository.UpdateMeterRead()
+
+	updateMeterReadPrepared, errorHandlerPreparedStmt := initTransaction.Prepare(updateMeterReadRepository)
+
+	if errorHandlerPreparedStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerPreparedStmt
+	}
+
+	_, errorHandlerExecPreparedStmt := updateMeterReadPrepared.Exec(
+		&meterReadUpdatePayload.Verb,
+		&meterReadUpdatePayload.Noun,
+		&meterReadUpdatePayload.Revision,
+		&meterReadUpdatePayload.Datetime,
+		&meterReadUpdatePayload.Source,
+		&meterReadUpdatePayload.MeterCode,
+		meterReadId,
+	)
+
+	if errorHandlerExecPreparedStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerExecPreparedStmt
+	}
+
+	errorHandlerCommitTrans := initTransaction.Commit()
+
+	if errorHandlerCommitTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerCommitTrans
+	}
+
+	return nil
+
+}

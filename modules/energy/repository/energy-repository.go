@@ -54,3 +54,16 @@ func SaveIntervalMeter() string {
 		"interval_flags, collection_time, meter_code) " +
 		"VALUES(?, ?, ?, ?, ?, ?, ?)"
 }
+
+func UpdateMeterRead() string {
+	return "UPDATE meter_information SET verb = ?, " +
+		"noun = ?, " +
+		"revision = ?, " +
+		"date_time = ?, " +
+		"source = ?, " +
+		"meter_code = ? WHERE meter_information_id = ?"
+}
+
+func DeleteMeterRead() string {
+	return "DELETE FROM meter_information WHERE meter_information_id = ?"
+}

@@ -16,6 +16,7 @@ func GetAllMeterRead(ctx *gin.Context) {
 
 	if errorHandlerService != nil {
 		log.Printf("Error when get service : %s", errorHandlerService)
+		ctx.JSON(500, gin.H{"error": "Internal server error"})
 	}
 
 	ctx.JSON(200, gin.H{
@@ -32,9 +33,11 @@ func GetDetailMeterRead(ctx *gin.Context) {
 
 	if errorHandlerService != nil {
 		log.Printf("Error when get service : %s", errorHandlerService)
+		ctx.JSON(500, gin.H{"error": "Internal server error"})
 	} else if meterReadService == nil {
 		ctx.JSON(200, gin.H{
-			"data": []int{},
+			"message": "Data kosong",
+			"data":    []int{},
 		})
 	} else {
 		ctx.JSON(200, gin.H{
@@ -52,10 +55,51 @@ func CreateNewMeterRead(ctx *gin.Context) {
 
 	if errorHandlerCreateMeterRead != nil {
 		log.Printf("Error when get service : %s", errorHandlerCreateMeterRead)
+		ctx.JSON(500, gin.H{"error": "Internal server error"})
 	}
 
 	ctx.JSON(200, gin.H{
 		"message": "Meter data created",
 		"created": createNewMeterReadPayload,
+	})
+}
+
+func UpdateMeterRead(ctx *gin.Context) {
+	var (
+		updateMeterReadPayload model.UpdateMeterRead
+		meterReadId            = ctx.Param("meterReadId")
+	)
+
+	meterReadService, errorHandlerService := service.FetchDetailMeterRead(meterReadId)
+
+	if errorHandlerService != nil {
+		log.Printf("Error when get service : %s", errorHandlerService)
+		ctx.JSON(500, gin.H{"error": "Internal server error"})
+	}
+
+	if meterReadService == nil {
+		ctx.JSON(200, gin.H{
+			"message": "Data kosong",
+			"data":    []int{},
+		})
+	} else {
+		ctx.ShouldBindJSON(&updateMeterReadPayload)
+
+		UpdateMeterReadProcess(updateMeterReadPayload, meterReadId, ctx)
+	}
+}
+
+func UpdateMeterReadProcess(meterReadUpdatePayload model.UpdateMeterRead, meterReadId string, ctx *gin.Context) {
+
+	errorHandlerUpdateMeterReadService := service.UpdateMeterRead(meterReadUpdatePayload, meterReadId)
+
+	if errorHandlerUpdateMeterReadService != nil {
+		log.Printf("Error when get service : %s", errorHandlerUpdateMeterReadService)
+		ctx.JSON(500, gin.H{"error": "Internal server error"})
+	}
+
+	ctx.JSON(200, gin.H{
+		"message": "Meter data updated",
+		"updated": meterReadUpdatePayload,
 	})
 }

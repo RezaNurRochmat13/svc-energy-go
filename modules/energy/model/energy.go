@@ -52,3 +52,12 @@ type CreateNewMeterRead struct {
 	IntervalFlag   string `json:"interval_flag"`
 	CollectionTime string `json:"collection_time"`
 }
+
+type UpdateMeterRead struct {
+	Verb      string `json:"verb"`
+	Noun      string `json:"noun"`
+	Revision  int    `json:"revision"`
+	Datetime  string `json:"date_time"`
+	Source    string `json:"source"`
+	MeterCode string `json:"meter_code"`
+}

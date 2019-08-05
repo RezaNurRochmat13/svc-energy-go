@@ -13,5 +13,6 @@ func EnergyRoutes(userRoutes *gin.Engine) {
 		energyRouteConfiguration.GET("meter-reads", handler.GetAllMeterRead)
 		energyRouteConfiguration.GET("meter-reads/:meterReadId", handler.GetDetailMeterRead)
 		energyRouteConfiguration.POST("meter-reads", handler.CreateNewMeterRead)
+		energyRouteConfiguration.PUT("meter-reads/:meterReadId", handler.UpdateMeterRead)
 	}
 }
