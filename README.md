@@ -1,6 +1,6 @@
 # Service Energy Using Golang
 
-This project is example manage energy resource data using Golang.
+This project is example manage meter resource data using Golang.
 
 ## Table of Contents
 
@@ -17,16 +17,11 @@ List of all readme contents:
 
 List of all features/functionalities handled by this app/service:
 
- - Key feature A
-   - Sub feature A1
-   - Sub feature A2
-   - Sub feature A3
- - Key feature B
-   - Sub feature B1
-   - Sub feature B2
- - Key feature C
- - Key feature D
- - Key feature E
+ - Get All Meter Read With Pagination
+ - Get Detail Meter Read by Meter Read ID
+ - Create New Meter Read Data
+ - Update Meter Read Data
+ - Delete Meter Read Data
 
 ## Built With
 List of all core technologies used to build this app/service along with their functions, versions (if any), and link to their online pages, grouped based on development stack:
@@ -51,6 +46,11 @@ List of all core technologies used to build this app/service along with their fu
 
 List all required steps to deploy this app/service in server, like environment variables, server requirements, amount of compute resources (CPU, RAM), and dependency services that will communicate with this app/service.
 
+### Running Locally 
+### Running using Docker
+### Runing in Kubernetes
+- On Going
+
 ### Environment Variables
 
 **MySQL Config:**
@@ -60,21 +60,12 @@ List all required steps to deploy this app/service in server, like environment v
 - `MYSQL_PASSWORD` Password for the database using MySQL.
 - `MYSQL_HOST` Hostname of the database server using MySQL.
 
-**Dependency Services Config:**
-
-- `USER_SERVICE` FQDN of User Service.
-- `STUDENT_SERVICE` FQDN of Student Service.
-- `NOTIF_SERVICE` FQDN of Notification Service.
-- `LOGGING_SERVICE` FQDN of Logging Service.
-
-**Other Config:**
-
-- `LOG_LEVEL` Log level of the service. Accepted values: `debug`, `info`, or `notice`.
-- `JWT_SECRET` The key that will be used to sign JSON Web Token.
-
 ## API Reference
 
 Depending on the size of this app/service APIs, if it is small and simple enough the reference docs can be added to this README. For medium to larger app/service please use Gitlab wiki or provide a link to where the API reference docs live.
+
+### API Docs
+- For API Docs, i used Apiary `https://apiary.io/`  
 
 ## Release History
 
@@ -96,4 +87,4 @@ List of all released versions of this app/service along with their version logs,
 ## Authors
 List of all people working on this app/service along with their respective roles & contact emails:
 
-- [Reja Nur Rochmat](mailto:hal.jordan@uii.ac.id) - Software Engineer
+- [Reja Nur Rochmat](mailto:hal.rezanur@uii.ac.id) - Software Engineer
