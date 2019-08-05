@@ -10,6 +10,7 @@ func EnergyRoutes(userRoutes *gin.Engine) {
 
 	energyRouteConfiguration := userRoutes.Group("/public/api/v1")
 	{
-		energyRouteConfiguration.GET("energy", handler.GetAllenergy)
+		energyRouteConfiguration.GET("meter-reads", handler.GetAllMeterRead)
+		energyRouteConfiguration.GET("meter-reads/:meterReadId", handler.GetDetailMeterRead)
 	}
 }
