@@ -174,3 +174,144 @@ func FetchIntervalBlock(meterCode string) []model.Interval {
 
 	return resultIntervalBlockData
 }
+
+func CreateNewMeterRead(meterReadPayload model.CreateNewMeterRead) error {
+	databaseInterface := DatabaseConnection()
+
+	initTransaction, errorHandlerTrans := databaseInterface.Begin()
+
+	if errorHandlerTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerTrans
+	}
+
+	createMeterReadRepository := repository.SaveMeterRead()
+
+	createNewMeterReadPrepared, errorHandlerPrepareStmt := initTransaction.Prepare(createMeterReadRepository)
+
+	if errorHandlerPrepareStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerPrepareStmt
+	}
+
+	_, errorHandlerExecStmt := createNewMeterReadPrepared.Exec(
+		&meterReadPayload.Verb,
+		&meterReadPayload.Noun,
+		&meterReadPayload.Revision,
+		&meterReadPayload.Datetime,
+		&meterReadPayload.Source,
+		&meterReadPayload.MeterCode,
+	)
+
+	if errorHandlerExecStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerExecStmt
+	}
+
+	errorHandlerCreateMeterData := createNewMeterData(meterReadPayload)
+
+	if errorHandlerCreateMeterData != nil {
+		initTransaction.Rollback()
+		return errorHandlerCreateMeterData
+	}
+
+	errorHandlerCommitTrans := initTransaction.Commit()
+
+	if errorHandlerCommitTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerCommitTrans
+	}
+
+	return nil
+
+}
+
+func createNewMeterData(meterDataPayload model.CreateNewMeterRead) error {
+	databaseInterface := DatabaseConnection()
+
+	initTransaction, errorHandlerTrans := databaseInterface.Begin()
+
+	if errorHandlerTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerTrans
+	}
+
+	createMeterDataRepository := repository.SaveMeterData()
+
+	createMeterDataPrepared, errorHandlerPrepareStmt := initTransaction.Prepare(createMeterDataRepository)
+
+	if errorHandlerPrepareStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerPrepareStmt
+	}
+
+	_, errorHandlerExecStmt := createMeterDataPrepared.Exec(
+		&meterDataPayload.MeterCode,
+		&meterDataPayload.MeterType,
+	)
+
+	if errorHandlerExecStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerExecStmt
+	}
+
+	errorHandlerCreateIntervalBlock := createNewIntervalBlock(meterDataPayload)
+
+	if errorHandlerCreateIntervalBlock != nil {
+		initTransaction.Rollback()
+		return errorHandlerCreateIntervalBlock
+	}
+
+	errorHandlerCommitTrans := initTransaction.Commit()
+
+	if errorHandlerCommitTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerCommitTrans
+	}
+
+	return nil
+}
+
+func createNewIntervalBlock(intervalBlockPayload model.CreateNewMeterRead) error {
+	databaseInterface := DatabaseConnection()
+
+	initTransaction, errorHandlerTrans := databaseInterface.Begin()
+
+	if errorHandlerTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerTrans
+	}
+
+	createIntervalBlockRepository := repository.SaveIntervalMeter()
+
+	createIntervalBlockPrepared, errorHandlerPrepareStmt := initTransaction.Prepare(createIntervalBlockRepository)
+
+	if errorHandlerPrepareStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerPrepareStmt
+	}
+
+	_, errorHandlerExecStmt := createIntervalBlockPrepared.Exec(
+		&intervalBlockPayload.IntervalReadIn,
+		&intervalBlockPayload.EndTime,
+		&intervalBlockPayload.IntervalLength,
+		&intervalBlockPayload.IntervalValue,
+		&intervalBlockPayload.IntervalFlag,
+		&intervalBlockPayload.CollectionTime,
+		&intervalBlockPayload.MeterCode,
+	)
+
+	if errorHandlerExecStmt != nil {
+		initTransaction.Rollback()
+		return errorHandlerExecStmt
+	}
+
+	errorHandlerCommitTrans := initTransaction.Commit()
+
+	if errorHandlerCommitTrans != nil {
+		initTransaction.Rollback()
+		return errorHandlerCommitTrans
+	}
+
+	return nil
+}
