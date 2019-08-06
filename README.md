@@ -46,8 +46,22 @@ List of all core technologies used to build this app/service along with their fu
 
 List all required steps to deploy this app/service in server, like environment variables, server requirements, amount of compute resources (CPU, RAM), and dependency services that will communicate with this app/service.
 
-### Running Locally 
+### Running Locally
+- Pull this repo using SSH or HTTPS
+- Import DB in your local DB (DB using MySQL)
+- Install dep package in `https://github.com/golang/dep`
+- After install dep, run command `dep ensure` to download dependencies
+- After finish install dep, you can running apps using command shell script aka `sh run.sh`
+
 ### Running using Docker
+- Pull this repo using SSH or HTTPS
+- Import DB in your local DB (DB using MySQL)
+- Install dep package in `https://github.com/golang/dep`
+- After install dep, run command `dep ensure` to download dependencies
+- Compile your apps to binary using command shell aka `sh compile.sh`
+- After successfully compiled, build docker images using command `docker build -t $NAME_IMAGES:TAGS .`
+- After build docker images successful, you can run your apps in docker using command `docker run --rm -it -p $PORT:$PORT $NAME_IMAGES`
+
 ### Runing in Kubernetes
 - On Going
 
@@ -65,7 +79,6 @@ List all required steps to deploy this app/service in server, like environment v
 Depending on the size of this app/service APIs, if it is small and simple enough the reference docs can be added to this README. For medium to larger app/service please use Gitlab wiki or provide a link to where the API reference docs live.
 
 ### API Docs
-- For API Docs, i used Apiary `https://apiary.io/`  
 
 ## Release History
 
